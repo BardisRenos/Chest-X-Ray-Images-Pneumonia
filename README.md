@@ -70,3 +70,13 @@ def training_model(self):
     loss = model.evaluate_generator(test_data, steps=16)
 ```
 
+### Evaluate the model
+
+```python
+  def eval_model(self):
+      model, test_data = self.training_model()
+      test_data.reset()
+      pred = model.predict_generator(test_data, steps=16, verbose=1)
+      predict_class_indices = np.argmax(pred, axis=1)
+      print(predict_class_indices)
+```

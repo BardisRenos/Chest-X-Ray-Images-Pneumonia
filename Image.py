@@ -5,7 +5,7 @@ from keras.layers import Dense, GlobalAveragePooling2D
 from keras.preprocessing.image import ImageDataGenerator
 from keras.layers.pooling import MaxPooling2D
 from keras.layers.convolutional import Convolution2D
-
+import numpy as np
 
 class NeuralNetwork:
 
@@ -57,8 +57,16 @@ class NeuralNetwork:
         # Lastly, we evaluate the model by appling on the test dataset
         loss = model.evaluate_generator(test_data, steps=16)
 
-            
+        return model, test_data
+    
+    def eval_model(self):
+        model, test_data = self.training_model()
+        test_data.reset()
+        pred = model.predict_generator(test_data, steps=16, verbose=1)
+        predict_class_indices = np.argmax(pred, axis=1)
+        print(predict_class_indices)
+        
 if __name__ == '__main__':
     NN = NeuralNetwork()
-    NN.training_model()
+    NN.eval_model()
     

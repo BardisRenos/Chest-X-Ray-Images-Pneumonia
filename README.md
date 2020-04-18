@@ -10,17 +10,20 @@ This repository contains a example of transfer learning method, based on X-ray i
 <img src="https://github.com/BardisRenos/Chest-X-Ray-Images-Pneumonia-/blob/master/figs6.jpg" width="400" height="200" style=centerme>
 </p>
 
+### Retrieving the data from the source. 
+
+This example uses the library [ImageDataGenerator](https://keras.io/preprocessing/image/) of Keras. The data is already splitted into three categories, ***train data***, ***test data*** and ***validate data***. 
 
 ```python
   def export_data(self):
-    # Create generator
+    # Create generator with a parameter of rescaling the pixel values. 
     datagen = ImageDataGenerator(rescale=1./255)
 
     # Setting the image size 
     global IMG_SIZE
     IMG_SIZE = 250
 
-    # Retrieving the data from the source file.
+    # Retrieving each data sets from the source file.
     train_data = datagen.flow_from_directory('C:\\Users\\user\\Desktop\\chest_xray\\train\\', target_size=(IMG_SIZE, IMG_SIZE), color_mode="rgb", batch_size=128, shuffle=True, seed=42)
     val_data = datagen.flow_from_directory('C:\\Users\\user\\Desktop\\chest_xray\\val\\', target_size=(IMG_SIZE, IMG_SIZE), color_mode="rgb", batch_size=16, shuffle=True, seed=42)
     test_data = datagen.flow_from_directory('C:\\Users\\user\\Desktop\\chest_xray\\test\\', target_size=(IMG_SIZE, IMG_SIZE), color_mode="rgb", batch_size=128, shuffle=True, seed=42)
@@ -28,6 +31,9 @@ This repository contains a example of transfer learning method, based on X-ray i
     return train_data, val_data, test_data 
 ```
 
+### Creating the Deep Neural Network model
+
+The below model is a pre trained model (VGG-16). In this model has changed the input layer and the last part of the calssification layer.  
 
 ```python
 def training_model(self):
@@ -62,7 +68,5 @@ def training_model(self):
 
     # Lastly, we evaluate the model by appling on the test dataset
     loss = model.evaluate_generator(test_data, steps=16)
-
-
 ```
 

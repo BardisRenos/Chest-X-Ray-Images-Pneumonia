@@ -12,7 +12,7 @@ This repository contains a example of transfer learning method, based on X-ray i
 
 ### Retrieving the data from the source. 
 
-This example uses the library [ImageDataGenerator](https://keras.io/preprocessing/image/) of Keras. The data is already splitted into three categories, ***train data***, ***test data*** and ***validate data***. 
+This example uses the library [ImageDataGenerator](https://keras.io/preprocessing/image/) of Keras. The data is already splitted into three categories, ***train data***, ***test data*** and ***validate data***. By using Image Data Generator it is easier to manage the images. In our case because the data set is already seperated into three different folders. By using ***datagen.flow_from_directory*** can create the train array for our neural network.
 
 ```python
   def export_data(self):

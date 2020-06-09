@@ -40,6 +40,10 @@ def training_model(self):
     train_data, val_data, test_data = self.export_data()
     # Load the VGG model without the last layers
     vgg_model = VGG16(weights='imagenet', include_top=False, input_shape=(IMG_SIZE, IMG_SIZE, 3))
+    
+    # We stop the layers to be trained
+    for layer in model.layers:
+        layer.trainable = False
 
     # We can add the last part the classifier layers
     x = vgg_model.output
@@ -55,10 +59,6 @@ def training_model(self):
 
     # We can Define the new model
     model = Model(inputs=vgg_model.input, outputs=output)
-
-    # We stop the layers to be trained
-    for layer in model.layers:
-        layer.trainable = False
 
     # We choose the parameters of the model in order to train.
     model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['accuracy'])

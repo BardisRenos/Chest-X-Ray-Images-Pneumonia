@@ -68,6 +68,8 @@ def training_model(self):
 
     # Lastly, we evaluate the model by appling on the test dataset
     loss = model.evaluate_generator(test_data, steps=16)
+    
+    return model, test_data
 ```
 
 ### Evaluate the model
